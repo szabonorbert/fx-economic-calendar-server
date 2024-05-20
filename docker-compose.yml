@@ -10,3 +10,4 @@ services:
         restart: always
         ports:
             - '8000:80'
+        env_file: env_file
