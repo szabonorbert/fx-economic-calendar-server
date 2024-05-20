@@ -1,0 +1,12 @@
+
+services:
+    php:
+        container_name: php
+        build: 
+            context: .
+        volumes:
+            - ./app:/var/www/html/
+            - ./composer.json:/var/www/composer.json
+        restart: always
+        ports:
+            - '8000:80'
