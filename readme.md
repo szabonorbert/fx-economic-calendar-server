@@ -37,7 +37,7 @@ Since we don't use databases, it's an intensive task to condense the days, espec
 * ```min_importance```: importance level 1 to 3 (default is 3)
 * ```export```: type of export (default is ```json```, other options are ```array```, ```csv```, ```lines```)
 
-You can redefine export by get parameter:
+You can redefine ```export``` by get parameter:
 ```
 http://localhost:8000/2024/05/20?export=lines
 ```
