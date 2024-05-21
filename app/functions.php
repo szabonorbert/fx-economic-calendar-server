@@ -1,5 +1,15 @@
 <?php
 
+    function getYears(int $y1, int $y2) : array{
+        $result = array();
+        for ($i = $y1; $i <= $y2; $i++){
+            $year = getYear($i);
+            foreach ($year as $id => $event){
+                if (!isset($result[$id])) $result[$id] = $event;
+            }
+        }
+        return $result;
+    }
 
     function getYear(int $year) : array{
         $result = array();
