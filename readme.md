@@ -23,4 +23,6 @@ It also works if you put ```.json``` at the end of the URL, like ```2024/05/20.j
 
 ### Env variables
 
+* ```dailyfx_url```: url to fetch
+* ```url_prefix```: install folder of this script
 * ```min_importance```: importance level 1 to 3 (default is 3)
