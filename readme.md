@@ -2,7 +2,7 @@
 
 Lightweight, minimalistic PHP-based economic calendar server with json response. It can be used as the simplest quant data source or as indicators in MetaTrader, for instance, that look into the recent or distant past.
 
-#### Why?
+### Why?
 
 I was unable to locate any indicator that displays this type of historical basic economic data in order to calculate the influence on prices. Furthermore, I couldn't identify an easy and trustworthy source for this kind of information as an API. Thus, I created one.
 
@@ -28,5 +28,11 @@ It also works if you put ```.json``` at the end of the URL, like ```2024/05/20.j
 ### Env variables
 
 * ```dailyfx_url```: url to fetch
-* ```url_prefix```: install folder of this script
+* ```install_folder```: install folder of this script
 * ```min_importance```: importance level 1 to 3 (default is 3)
+* ```export```: type of export (default is ```json```, other options are ```array```, ```csv```, ```lines```)
+
+You can redefine env variables by get parameters:
+```
+http://localhost:8000/2024/05/20?export=lines
+```
