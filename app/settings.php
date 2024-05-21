@@ -1,7 +1,7 @@
 <?php
 
     $_setting["dailyfx_url"] = "https://www.dailyfx.com/economic-calendar/events";
-    $_setting["url_prefix"] = "awdawda";
+    $_setting["url_prefix"] = "";
     $_setting["min_importance"] = 3;
 
     foreach ($_setting as $key => $value){
