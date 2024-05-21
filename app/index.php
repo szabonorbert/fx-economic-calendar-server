@@ -6,7 +6,7 @@
     //basics and env
     if (!isset($_ENV["min_importance"]) || $_ENV["min_importance"] == "") $_ENV["min_importance"] = 3;
     $_ENV["min_importance"] = (int)$_ENV["min_importance"];
-    if (!isset($_ENV["dailyfx_url"])) $_ENV["dailyfx_url"] = "https://www.dailyfx.com/economic-calendar/events";
+    $FETCH_URL = "https://www.dailyfx.com/economic-calendar/events";
 
     //build the request
     $req = $_SERVER["REQUEST_URI"];
@@ -15,7 +15,10 @@
     $req = str_replace(".json", "", $req);
     $req = explode("/", $req);
     $req = array_filter($req);
-    if (count($req) > 3) $req = array_slice($req, -3, 3, true);
+    if (count($req) > 3){
+        $req = array_slice($req, -3, 3, true);
+        $req = array_values($req);
+    }
 
     //load nums
     $year = 0;
@@ -27,7 +30,7 @@
     
     //year is required
     if ($year == 0) die();
-
+    
     //load data
     $result = "";
     if ($year != 0 && $month != 0 && $day != 0){

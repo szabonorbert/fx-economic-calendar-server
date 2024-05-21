@@ -29,10 +29,12 @@
     //
     function getDay(int $year, int $month, int $day) : string{
         
+        global $FETCH_URL;
+
         $month = sprintf("%02d", $month);
         $day = sprintf("%02d", $day);
         $date_string = $year . "-" . $month . "-" . $day;
-
+        
         //validate date
         //too far dates are not allowed, even to persist
         $now = new DateTime();
@@ -45,11 +47,10 @@
         if (is_file($filename)){
             return file_get_contents($filename);
         }
-
+        
         //fetch from DailyFX
         $date_str = $year . "-" . $month . "-" . $day;
-        $url = trim($_ENV["dailyfx_url"], "/");
-        $url .= "/" . $date_str;
+        $url = $FETCH_URL . "/" . $date_str;
         $client = new GuzzleHttp\Client();
         $body = "";
         try {
