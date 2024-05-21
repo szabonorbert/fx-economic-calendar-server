@@ -1,33 +1,33 @@
 <?php
 
 
-    function getYear(int $year) : string {
+    function getYear(int $year) : array{
         $result = array();
         for ($i = 1; $i <= 12; $i++){
-            $month = json_decode(getMonth($year, $i), true);
+            $month = getMonth($year, $i);
             foreach ($month as $id => $event){
                 if (!isset($result[$id])) $result[$id] = $event;
             }
         }
-        return json_encode($result);
+        return $result;
     }
     
-    function getMonth(int $year, int $month) : string{
+    function getMonth(int $year, int $month) : array{
         $month_str = sprintf("%02d", $month);
         $maxdays = new DateTime($year."-".$month_str."-01");
         $maxdays = $maxdays->format('t');
 
         $result = array();
         for ($i = 1; $i <= $maxdays; $i++){
-            $day = json_decode(getDay($year, $month, $i), true);
+            $day = getDay($year, $month, $i);
             foreach ($day as $id => $event){
                 if (!isset($result[$id])) $result[$id] = $event;
             }
         }
-        return json_encode($result);
+        return $result;
     }
 
-    function getDay(int $year, int $month, int $day) : string{
+    function getDay(int $year, int $month, int $day) : array{
         
         global $_setting;
 
@@ -36,7 +36,7 @@
         $date_string = $year . "-" . $month . "-" . $day;
         
         //the result
-        $result = "{}";
+        $result = array();
 
         //validate date
         //too far dates are not allowed, even to persist
@@ -48,7 +48,7 @@
         //check if file exists
         $filename = "data/" . $date_string;
         if (is_file($filename)){
-            return file_get_contents($filename);
+            return json_decode(file_get_contents($filename), true);
         }
         
         //fetch from DailyFX
@@ -62,7 +62,7 @@
         } catch(GuzzleHttp\Exception\ClientException $e) {
             return $result;
         }
-        
+
         $body = json_decode($body, true);
         
         //load data to result array
@@ -78,8 +78,6 @@
             );
         }
 
-        $result = json_encode($result);
-        file_put_contents($filename, $result);
-
+        file_put_contents($filename, json_encode($result));
         return $result;
     }
