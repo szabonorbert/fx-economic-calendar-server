@@ -2,6 +2,10 @@
 
 Lightweight PHP-based economic calendar server with minimal features. It can be used as the simplest quant data source or as indicators in MetaTrader, for instance, that look into the recent or distant past.
 
+#### Why?
+
+I was unable to locate any indicator that displays this type of historical basic economic data in order to calculate the influence on prices. Furthermore, I couldn't identify an easy and trustworthy source for this kind of information as an API. Thus, I created one.
+
 ### Docker usage
 
 Run with ```docker-compose up``` and you can make your first request like this:
