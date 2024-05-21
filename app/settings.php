@@ -1,7 +1,7 @@
 <?php
 
     $_setting["dailyfx_url"] = "https://www.dailyfx.com/economic-calendar/events";
-    $_setting["url_prefix"] = "";
+    $_setting["install_folder"] = "";
     $_setting["min_importance"] = 3;
     $_setting["export"] = "json";
 
@@ -11,5 +11,5 @@
     }
 
     $_setting["dailyfx_url"] = trim($_setting["dailyfx_url"], "/");
-    $_setting["url_prefix"] = trim($_setting["url_prefix"], "/");
+    $_setting["install_folder"] = trim($_setting["install_folder"], "/");
     $_setting["min_importance"] = (int)$_setting["min_importance"];

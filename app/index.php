@@ -6,7 +6,7 @@
 
     //build the request
     $req = $_SERVER["REQUEST_URI"];
-    if ($_setting["url_prefix"] != "") $req = str_replace($_setting["url_prefix"], "", $req);
+    if ($_setting["install_folder"] != "") $req = str_replace($_setting["install_folder"], "", $req);
     $req = trim($req, "/");
     $req = str_replace(".json", "", $req);
     $req = explode("/", $req);
