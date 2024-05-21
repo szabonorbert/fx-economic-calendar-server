@@ -24,7 +24,7 @@ You can run it on the most basic shared hosting servers, even with free ones. Ma
 * ```/2024``` downloads the whole year
 * ```/2023-2024``` downloads multiple years
 
-It also works if you put ```.json``` at the end of the URL, like ```2024/05/20.json```. It's useful if you are using a CDN with default settings, like catch only the static files.
+It also works if you put ```.json``` at the end of the URL, like ```2024/05/20.json```. It's useful if you are using a CDN with default settings, like cache only the static files.
 
 ### CDN note
 
