@@ -35,12 +35,15 @@
         $day = sprintf("%02d", $day);
         $date_string = $year . "-" . $month . "-" . $day;
         
+        //the result
+        $result = "{}";
+
         //validate date
         //too far dates are not allowed, even to persist
         $now = new DateTime();
         $asked = new DateTime($date_string);
         $interval = $now->diff($asked);
-        if ($interval->format('%R') == "+" && $interval->format('%a') > 7) return "";
+        if ($interval->format('%R') == "+" && $interval->format('%a') > 7) return $result;
 
         //check if file exists
         $filename = "data/" . $date_string;
@@ -52,13 +55,14 @@
         $date_str = $year . "-" . $month . "-" . $day;
         $url = $_setting["dailyfx_url"] . "/" . $date_str;
         $client = new GuzzleHttp\Client();
-        $body = "[]";
+        
         try {
             $res = $client->request('GET', $url);
             $body = $res->getBody();
         } catch(GuzzleHttp\Exception\ClientException $e) {
-            return $body;
+            return $result;
         }
+        
         $body = json_decode($body, true);
         
         //load data to result array
