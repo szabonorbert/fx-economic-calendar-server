@@ -1,12 +1,24 @@
 <?php
 
-    function loadYear($year) {
+    function loadData(int $year, int $month, int $day, array $result){
+        if ($year !== null && $month !== null && $day !== null){
+            loadDay($year, $month, $day);
+        } else if ($year !== null && $month !== null){
+            loadMonth($year, $month);
+        } else if ($year !== null){
+            loadYear($year);
+        } else {
+            die();
+        }
+    }
+
+    function loadYear(int $year) {
         for ($i = 1; $i <= 12; $i++){
             loadMonth($year, $i);
         }
     }
     
-    function loadMonth($year, $month){
+    function loadMonth(int $year, int $month){
         $month_str = sprintf("%02d", $month);
         $maxdays = new DateTime($year."-".$month_str."-01");
         $maxdays = $maxdays->format('t');
@@ -15,7 +27,7 @@
         }
     }
 
-    function loadDay($year, $month, $day){
+    function loadDay(int $year, int $month, int $day){
         $month = sprintf("%02d", $month);
         $day = sprintf("%02d", $day);
         $filename = "data/" . $year . "-" . $month . "-" . $day;
