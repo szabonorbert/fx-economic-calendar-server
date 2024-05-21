@@ -36,5 +36,32 @@
         $result = getYear($year);
     }
 
-    header('Content-Type: application/json; charset=utf-8');
-    echo $result;
+    //show results
+    switch ($_setting["export"]){
+        
+        case "array":
+            header('Content-Type: text/html; charset=utf-8');
+            echo "<pre>";
+            print_r($result);
+            break;
+
+        case "lines":
+            header('Content-Type: text/plain; charset=utf-8');
+            foreach ($result as $key => $value){
+                echo $key . ";" . implode(";", $value) . PHP_EOL;
+            }
+            break;
+
+        case "csv":
+            header('Content-Type: text/csv; charset=utf-8');
+            echo "id;title;currency;date;importance" . PHP_EOL;
+            foreach ($result as $key => $value){
+                echo $key . ";" . implode(";", $value) . PHP_EOL;
+            }
+            break;
+
+        case "json":
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($result);
+            break;
+    }
