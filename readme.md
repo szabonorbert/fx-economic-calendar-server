@@ -1,6 +1,6 @@
 # FX economic calendar server
 
-Create your own lightweight PHP-based economic calendar server with minimal features. It can be used as a quant data source or as indicators in MetaTrader, for instance, that look into the recent or distant past.
+Lightweight PHP-based economic calendar server with minimal features. It can be used as the simplest quant data source or as indicators in MetaTrader, for instance, that look into the recent or distant past.
 
 ### Docker usage
 
