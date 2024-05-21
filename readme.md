@@ -19,11 +19,16 @@ You can run it on the most basic shared hosting servers, even with free ones. Ma
 
 ### Valid routes
 
-* ```2024/05/20``` downloads only one day
-* ```2024/05``` downloads the whole month
-* ```2024``` downloads the whole year
+* ```/2024/05/20``` downloads only one day
+* ```/2024/05``` downloads the whole month
+* ```/2024``` downloads the whole year
+* ```/2023-2024``` downloads multiple years
 
 It also works if you put ```.json``` at the end of the URL, like ```2024/05/20.json```. It's useful if you are using a CDN with default settings, like catch only the static files.
+
+### CDN note
+
+Since we don't use databases, it's an intensive task to condense the days, especially if you download multiple years. Do not forget to put a CDN in front of the results.
 
 ### Env variables
 
@@ -36,3 +41,4 @@ You can redefine export by get parameter:
 ```
 http://localhost:8000/2024/05/20?export=lines
 ```
+
