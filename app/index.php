@@ -1,24 +1,17 @@
 <?php
 
     require "../vendor/autoload.php";
+    require "settings.php";
     require "functions.php";
-    
-    //basics and env
-    if (!isset($_ENV["min_importance"]) || $_ENV["min_importance"] == "") $_ENV["min_importance"] = 3;
-    $_ENV["min_importance"] = (int)$_ENV["min_importance"];
-    $FETCH_URL = "https://www.dailyfx.com/economic-calendar/events";
 
     //build the request
     $req = $_SERVER["REQUEST_URI"];
-    if (isset($_ENV["url_prefix"]) && $_ENV["url_prefix"] != "") $req = str_replace($_ENV["url_prefix"], "", $req);
+    if ($_setting["url_prefix"] != "") $req = str_replace($_setting["url_prefix"], "", $req);
     $req = trim($req, "/");
     $req = str_replace(".json", "", $req);
     $req = explode("/", $req);
     $req = array_filter($req);
-    if (count($req) > 3){
-        $req = array_slice($req, -3, 3, true);
-        $req = array_values($req);
-    }
+    $req = array_values($req);
 
     //load nums
     $year = 0;
@@ -27,7 +20,9 @@
     if (isset($req[0])) $year = (int)$req[0];
     if (isset($req[1])) $month = (int)$req[1];
     if (isset($req[2])) $day = (int)$req[2];
-    
+
+    //echo $year . "-" . $month . "-" . $day;
+
     //year is required
     if ($year == 0) die();
     

@@ -29,7 +29,7 @@
     //
     function getDay(int $year, int $month, int $day) : string{
         
-        global $FETCH_URL;
+        global $_setting;
 
         $month = sprintf("%02d", $month);
         $day = sprintf("%02d", $day);
@@ -50,7 +50,7 @@
         
         //fetch from DailyFX
         $date_str = $year . "-" . $month . "-" . $day;
-        $url = $FETCH_URL . "/" . $date_str;
+        $url = $_setting["dailyfx_url"] . "/" . $date_str;
         $client = new GuzzleHttp\Client();
         $body = "";
         try {
@@ -66,7 +66,7 @@
         //load data to result array
         $result = array();
         foreach ($body as $b){
-            if ($b["importanceNum"] < $_ENV["min_importance"]) continue;
+            if ($b["importanceNum"] < $_setting["min_importance"]) continue;
             $result[] = array(
                 "id" => $b["id"],
                 "title" => $b["title"],
