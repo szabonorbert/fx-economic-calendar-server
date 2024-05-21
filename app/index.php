@@ -3,15 +3,19 @@
     require "../vendor/autoload.php";
     require "functions.php";
     
+    //basics and env
     if (!isset($_ENV["min_importance"]) || $_ENV["min_importance"] == "") $_ENV["min_importance"] = 3;
     $_ENV["min_importance"] = (int)$_ENV["min_importance"];
+    if (!isset($_ENV["dailyfx_url"])) $_ENV["dailyfx_url"] = "https://www.dailyfx.com/economic-calendar/events";
 
-    //get the request
+    //build the request
     $req = $_SERVER["REQUEST_URI"];
     if (isset($_ENV["url_prefix"]) && $_ENV["url_prefix"] != "") $req = str_replace($_ENV["url_prefix"], "", $req);
     $req = trim($req, "/");
+    $req = str_replace(".json", "", $req);
     $req = explode("/", $req);
     $req = array_filter($req);
+    if (count($req) > 3) $req = array_slice($req, -3, 3, true);
 
     //load nums
     $year = 0;
