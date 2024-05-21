@@ -36,6 +36,5 @@
         $result = getYear($year);
     }
 
-    $result = "[" . $result . "]";
     header('Content-Type: application/json; charset=utf-8');
     echo $result;

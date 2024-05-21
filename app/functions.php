@@ -2,12 +2,14 @@
 
 
     function getYear(int $year) : string {
-        $result = "";
+        $result = array();
         for ($i = 1; $i <= 12; $i++){
-            $result .= getMonth($year, $i) . ",";
+            $month = json_decode(getMonth($year, $i), true);
+            foreach ($month as $id => $event){
+                if (!isset($result[$id])) $result[$id] = $event;
+            }
         }
-        $result = trim($result, ",");
-        return $result;
+        return json_encode($result);
     }
     
     function getMonth(int $year, int $month) : string{
@@ -15,18 +17,16 @@
         $maxdays = new DateTime($year."-".$month_str."-01");
         $maxdays = $maxdays->format('t');
 
-        $result = "";
+        $result = array();
         for ($i = 1; $i <= $maxdays; $i++){
-            $result .= getDay($year, $month, $i) . ",";
+            $day = json_decode(getDay($year, $month, $i), true);
+            foreach ($day as $id => $event){
+                if (!isset($result[$id])) $result[$id] = $event;
+            }
         }
-        $result = trim($result, ",");
-        return $result;
+        return json_encode($result);
     }
 
-    //
-    //  creates an invalid json, because the '[' and ']' characters are missing from the beginning and the end
-    //  but this way it's simpler to persist and concatenate, we do not need to reconvert the arrays to json all the time
-    //
     function getDay(int $year, int $month, int $day) : string{
         
         global $_setting;
@@ -52,13 +52,11 @@
         $date_str = $year . "-" . $month . "-" . $day;
         $url = $_setting["dailyfx_url"] . "/" . $date_str;
         $client = new GuzzleHttp\Client();
-        $body = "";
+        $body = "[]";
         try {
             $res = $client->request('GET', $url);
             $body = $res->getBody();
         } catch(GuzzleHttp\Exception\ClientException $e) {
-            //empty body is fine if something went wrong,
-            //but do not persist as file
             return $body;
         }
         $body = json_decode($body, true);
@@ -67,8 +65,8 @@
         $result = array();
         foreach ($body as $b){
             if ($b["importanceNum"] < $_setting["min_importance"]) continue;
-            $result[] = array(
-                "id" => $b["id"],
+            if (isset($result[$b["id"]])) continue;
+            $result[$b["id"]] = array(
                 "title" => $b["title"],
                 "currency" => $b["currency"],
                 "date" => $b["date"],
@@ -77,7 +75,6 @@
         }
 
         $result = json_encode($result);
-        $result = trim($result, "[]");  // <--- creates an invalid json, but easier and faster to concatenate the daily results
         file_put_contents($filename, $result);
 
         return $result;
